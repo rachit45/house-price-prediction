@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>House Price Prediction</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>🏠 House Price Prediction</h1>
+
+        <p>Enter House Details</p>
+
+        <form action="/predict" method="POST">
+
+            <input type="number" step="any" name="longitude"
+                   placeholder="Longitude" required>
+
+            <input type="number" step="any" name="latitude"
+                   placeholder="Latitude" required>
+
+            <input type="number" step="any" name="housing_median_age"
+                   placeholder="Housing Median Age" required>
+
+            <input type="number" step="any" name="total_rooms"
+                   placeholder="Total Rooms" required>
+
+            <input type="number" step="any" name="total_bedrooms"
+                   placeholder="Total Bedrooms" required>
+
+            <input type="number" step="any" name="population"
+                   placeholder="Population" required>
+
+            <input type="number" step="any" name="households"
+                   placeholder="Households" required>
+
+            <input type="number" step="any" name="median_income"
+                   placeholder="Median Income" required>
+
+            <select name="ocean_proximity" required>
+
+                <option value="">Select Ocean Proximity</option>
+
+                <option value="<1H OCEAN">&lt;1H OCEAN</option>
+
+                <option value="INLAND">INLAND</option>
+
+                <option value="ISLAND">ISLAND</option>
+
+                <option value="NEAR BAY">NEAR BAY</option>
+
+                <option value="NEAR OCEAN">NEAR OCEAN</option>
+
+            </select>
+
+            <button type="submit">
+                Predict House Price
+            </button>
+
+        </form>
+
+        {% if prediction %}
+            <div class="result">
+                Predicted House Price: £{{ prediction }}
+            </div>
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>
