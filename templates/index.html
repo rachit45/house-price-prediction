@@ -2,78 +2,568 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>House Price Prediction</title>
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
+
 </head>
+
 
 <body>
 
-    <div class="container">
+<div class="page">
 
-        <h1>🏠 House Price Prediction</h1>
 
-        <p>Enter House Details</p>
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
 
-        <form action="/predict" method="POST">
+    <header class="hero">
 
-            <input type="number" step="any" name="longitude"
-                   placeholder="Longitude" required>
+        <div class="hero-icon">🏠</div>
 
-            <input type="number" step="any" name="latitude"
-                   placeholder="Latitude" required>
+        <h1>House Price Prediction</h1>
 
-            <input type="number" step="any" name="housing_median_age"
-                   placeholder="Housing Median Age" required>
+        <p>
+            Machine Learning based California house price estimator
+        </p>
 
-            <input type="number" step="any" name="total_rooms"
-                   placeholder="Total Rooms" required>
+    </header>
 
-            <input type="number" step="any" name="total_bedrooms"
-                   placeholder="Total Bedrooms" required>
 
-            <input type="number" step="any" name="population"
-                   placeholder="Population" required>
+    <!-- =====================================================
+         MAIN CARD
+    ====================================================== -->
 
-            <input type="number" step="any" name="households"
-                   placeholder="Households" required>
+    <main class="card">
 
-            <input type="number" step="any" name="median_income"
-                   placeholder="Median Income" required>
 
-            <select name="ocean_proximity" required>
+        <div class="intro">
 
-                <option value="">Select Ocean Proximity</option>
+            <h2>Enter House Details</h2>
 
-                <option value="<1H OCEAN">&lt;1H OCEAN</option>
+            <p>
+                Enter realistic house and location information
+                to estimate the house price.
+            </p>
 
-                <option value="INLAND">INLAND</option>
+        </div>
 
-                <option value="ISLAND">ISLAND</option>
 
-                <option value="NEAR BAY">NEAR BAY</option>
+        <!-- =================================================
+             ERROR MESSAGE
+        ================================================== -->
 
-                <option value="NEAR OCEAN">NEAR OCEAN</option>
+        {% if errors %}
 
-            </select>
+        <div class="error-box">
 
-            <button type="submit">
-                Predict House Price
+            <strong>⚠️ Please check your input</strong>
+
+            <ul>
+
+                {% for error in errors %}
+
+                <li>{{ error }}</li>
+
+                {% endfor %}
+
+            </ul>
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- =================================================
+             FORM
+        ================================================== -->
+
+        <form action="/predict"
+              method="POST">
+
+
+            <!-- =============================================
+                 LOCATION
+            ============================================== -->
+
+            <section class="section">
+
+                <h3>📍 Location Information</h3>
+
+
+                <div class="grid">
+
+
+                    <!-- LONGITUDE -->
+
+                    <div class="field">
+
+                        <label for="longitude">
+                            Longitude
+                        </label>
+
+                        <input
+                            type="number"
+                            id="longitude"
+                            name="longitude"
+
+                            min="-124.5"
+                            max="-114"
+                            step="0.01"
+
+                            value="{{ values.longitude if values else '' }}"
+
+                            placeholder="-122.23"
+
+                            required
+                        >
+
+                        <small>
+                            Allowed: -124.5 to -114.0
+                            <br>
+                            Example: -122.23
+                        </small>
+
+                    </div>
+
+
+                    <!-- LATITUDE -->
+
+                    <div class="field">
+
+                        <label for="latitude">
+                            Latitude
+                        </label>
+
+                        <input
+                            type="number"
+                            id="latitude"
+                            name="latitude"
+
+                            min="32"
+                            max="42.5"
+                            step="0.01"
+
+                            value="{{ values.latitude if values else '' }}"
+
+                            placeholder="37.88"
+
+                            required
+                        >
+
+                        <small>
+                            Allowed: 32.0 to 42.5
+                            <br>
+                            Example: 37.88
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =============================================
+                 PROPERTY
+            ============================================== -->
+
+            <section class="section">
+
+                <h3>🏠 Property Information</h3>
+
+
+                <div class="grid">
+
+
+                    <!-- HOUSING AGE -->
+
+                    <div class="field">
+
+                        <label for="housing_median_age">
+                            Housing Median Age
+                        </label>
+
+                        <input
+                            type="number"
+                            id="housing_median_age"
+                            name="housing_median_age"
+
+                            min="1"
+                            max="52"
+                            step="1"
+
+                            value="{{ values.housing_median_age if values else '' }}"
+
+                            placeholder="41"
+
+                            required
+                        >
+
+                        <small>
+                            Allowed: 1 to 52 years.
+                            Example: 41
+                        </small>
+
+                    </div>
+
+
+                    <!-- TOTAL ROOMS -->
+
+                    <div class="field">
+
+                        <label for="total_rooms">
+                            Total Rooms
+                        </label>
+
+                        <input
+                            type="number"
+                            id="total_rooms"
+                            name="total_rooms"
+
+                            min="1"
+                            max="40000"
+                            step="1"
+
+                            value="{{ values.total_rooms if values else '' }}"
+
+                            placeholder="880"
+
+                            required
+                        >
+
+                        <small>
+                            Allowed: 1 to 40,000.
+                            Example: 880
+                        </small>
+
+                    </div>
+
+
+                    <!-- TOTAL BEDROOMS -->
+
+                    <div class="field">
+
+                        <label for="total_bedrooms">
+                            Total Bedrooms
+                        </label>
+
+                        <input
+                            type="number"
+                            id="total_bedrooms"
+                            name="total_bedrooms"
+
+                            min="1"
+                            max="10000"
+                            step="1"
+
+                            value="{{ values.total_bedrooms if values else '' }}"
+
+                            placeholder="129"
+
+                            required
+                        >
+
+                        <small>
+                            Must not be greater than Total Rooms.
+                            Example: 129
+                        </small>
+
+                    </div>
+
+
+                    <!-- MEDIAN INCOME -->
+
+                    <div class="field">
+
+                        <label for="median_income">
+                            Median Income
+                        </label>
+
+                        <input
+                            type="number"
+                            id="median_income"
+                            name="median_income"
+
+                            min="0.5"
+                            max="16"
+                            step="0.0001"
+
+                            value="{{ values.median_income if values else '' }}"
+
+                            placeholder="8.3252"
+
+                            required
+                        >
+
+                        <small>
+                            Allowed: 0.5 to 16.
+                            Example: 8.3252
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =============================================
+                 POPULATION
+            ============================================== -->
+
+            <section class="section">
+
+                <h3>👨‍👩‍👧 Population & Household Information</h3>
+
+
+                <div class="grid">
+
+
+                    <!-- POPULATION -->
+
+                    <div class="field">
+
+                        <label for="population">
+                            Population
+                        </label>
+
+                        <input
+                            type="number"
+                            id="population"
+                            name="population"
+
+                            min="1"
+                            max="40000"
+                            step="1"
+
+                            value="{{ values.population if values else '' }}"
+
+                            placeholder="322"
+
+                            required
+                        >
+
+                        <small>
+                            Allowed: 1 to 40,000.
+                            Example: 322
+                        </small>
+
+                    </div>
+
+
+                    <!-- HOUSEHOLDS -->
+
+                    <div class="field">
+
+                        <label for="households">
+                            Households
+                        </label>
+
+                        <input
+                            type="number"
+                            id="households"
+                            name="households"
+
+                            min="1"
+                            max="10000"
+                            step="1"
+
+                            value="{{ values.households if values else '' }}"
+
+                            placeholder="126"
+
+                            required
+                        >
+
+                        <small>
+                            Households cannot be greater than Population.
+                            Example: 126
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =============================================
+                 OCEAN PROXIMITY
+            ============================================== -->
+
+            <section class="section">
+
+                <h3>🌊 Location Type</h3>
+
+
+                <div class="field">
+
+                    <label for="ocean_proximity">
+                        Ocean Proximity
+                    </label>
+
+
+                    <select
+                        id="ocean_proximity"
+                        name="ocean_proximity"
+                        required
+                    >
+
+                        <option
+                            value="<1H OCEAN"
+                            {% if values and values.ocean_proximity == "<1H OCEAN" %}selected{% endif %}
+                        >
+                            &lt;1H OCEAN
+                        </option>
+
+
+                        <option
+                            value="INLAND"
+                            {% if values and values.ocean_proximity == "INLAND" %}selected{% endif %}
+                        >
+                            INLAND
+                        </option>
+
+
+                        <option
+                            value="ISLAND"
+                            {% if values and values.ocean_proximity == "ISLAND" %}selected{% endif %}
+                        >
+                            ISLAND
+                        </option>
+
+
+                        <option
+                            value="NEAR BAY"
+                            {% if values and values.ocean_proximity == "NEAR BAY" %}selected{% endif %}
+                        >
+                            NEAR BAY
+                        </option>
+
+
+                        <option
+                            value="NEAR OCEAN"
+                            {% if values and values.ocean_proximity == "NEAR OCEAN" %}selected{% endif %}
+                        >
+                            NEAR OCEAN
+                        </option>
+
+                    </select>
+
+
+                    <small>
+                        Select the location's proximity to the ocean.
+                    </small>
+
+                </div>
+
+
+                <!-- OCEAN GUIDE -->
+
+                <div class="options-info">
+
+                    <strong>
+                        🌊 What do these options mean?
+                    </strong>
+
+                    <ul>
+
+                        <li>
+                            <b>&lt;1H OCEAN:</b>
+                            Less than one hour from the ocean.
+                        </li>
+
+                        <li>
+                            <b>INLAND:</b>
+                            Located away from the ocean.
+                        </li>
+
+                        <li>
+                            <b>ISLAND:</b>
+                            Located on an island.
+                        </li>
+
+                        <li>
+                            <b>NEAR BAY:</b>
+                            Located near a bay.
+                        </li>
+
+                        <li>
+                            <b>NEAR OCEAN:</b>
+                            Located near the ocean.
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </section>
+
+
+            <!-- =============================================
+                 BUTTON
+            ============================================== -->
+
+            <button
+                type="submit"
+                class="predict-btn"
+            >
+                🔮 Predict House Price
             </button>
+
 
         </form>
 
+
+        <!-- =================================================
+             RESULT
+        ================================================== -->
+
         {% if prediction %}
-            <div class="result">
-                Predicted House Price: £{{ prediction }}
-            </div>
+
+        <div class="result">
+
+            <p>
+                🏠 Estimated House Price
+            </p>
+
+            <h2>
+                ${{ prediction }}
+            </h2>
+
+            <span>
+                Estimated using Linear Regression
+            </span>
+
+        </div>
+
         {% endif %}
 
-    </div>
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer>
+
+        House Price Prediction • Machine Learning Project
+
+    </footer>
+
+
+</div>
 
 </body>
 

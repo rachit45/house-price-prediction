@@ -1,65 +1,470 @@
-body {
-    margin: 0;
-    padding: 0;
-    background: #f4f4f4;
-    font-family: Arial, Helvetica, sans-serif;
-}
+/* =========================================================
+   GLOBAL
+========================================================= */
 
-.container {
-    width: 500px;
-    margin: 50px auto;
-    background: white;
-    padding: 30px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0px 0px 10px gray;
-}
-
-h1 {
-    color: #2c3e50;
-}
-
-p {
-    font-size: 20px;
-}
-
-form {
-    margin-top: 20px;
-}
-
-input,
-select {
-    width: 90%;
-    padding: 12px;
-    margin: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 15px;
+* {
     box-sizing: border-box;
 }
 
-button {
-    width: 90%;
-    padding: 12px;
-    margin-top: 15px;
-    background: #3498db;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 17px;
-    cursor: pointer;
+
+body {
+    margin: 0;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: #f3f6fb;
+
+    color: #1f2937;
 }
 
-button:hover {
-    background: #2980b9;
+
+.page {
+    min-height: 100vh;
 }
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+    text-align: center;
+
+    padding:
+        45px
+        20px
+        30px;
+}
+
+
+.hero-icon {
+    font-size: 48px;
+}
+
+
+.hero h1 {
+    margin:
+        10px
+        0
+        8px;
+
+    font-size: 42px;
+
+    color: #172554;
+}
+
+
+.hero p {
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 18px;
+}
+
+
+/* =========================================================
+   MAIN CARD
+========================================================= */
+
+.card {
+    width: min(1000px, 92%);
+
+    margin:
+        0
+        auto
+        40px;
+
+    background: #ffffff;
+
+    border-radius: 20px;
+
+    padding: 35px;
+
+    box-shadow:
+        0 10px 35px
+        rgba(15, 23, 42, 0.10);
+}
+
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.intro {
+    text-align: center;
+
+    margin-bottom: 35px;
+}
+
+
+.intro h2 {
+    margin-bottom: 8px;
+
+    font-size: 28px;
+
+    color: #172554;
+}
+
+
+.intro p {
+    color: #64748b;
+}
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.section {
+    margin-bottom: 35px;
+}
+
+
+.section h3 {
+    font-size: 21px;
+
+    margin-bottom: 20px;
+
+    padding-bottom: 10px;
+
+    border-bottom:
+        1px solid #e5e7eb;
+
+    color: #172554;
+}
+
+
+/* =========================================================
+   GRID
+========================================================= */
+
+.grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 22px;
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.field {
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+.field label {
+    font-weight: 700;
+
+    margin-bottom: 8px;
+
+    color: #334155;
+}
+
+
+.field input,
+.field select {
+
+    width: 100%;
+
+    padding:
+        13px
+        15px;
+
+    border:
+        1px solid
+        #cbd5e1;
+
+    border-radius: 10px;
+
+    font-size: 16px;
+
+    outline: none;
+
+    background: #ffffff;
+
+    transition: 0.2s;
+}
+
+
+.field input:focus,
+.field select:focus {
+
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(37, 99, 235, 0.12);
+}
+
+
+.field input:invalid:not(:placeholder-shown) {
+
+    border-color: #dc2626;
+}
+
+
+.field small {
+
+    margin-top: 7px;
+
+    color: #64748b;
+
+    font-size: 13px;
+
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   OCEAN GUIDE
+========================================================= */
+
+.options-info {
+
+    margin-top: 20px;
+
+    background: #eff6ff;
+
+    border-left:
+        4px solid
+        #2563eb;
+
+    padding:
+        15px
+        18px;
+
+    border-radius: 10px;
+
+    color: #334155;
+}
+
+
+.options-info strong {
+
+    color: #1e3a8a;
+}
+
+
+.options-info ul {
+
+    margin-bottom: 0;
+
+    padding-left: 20px;
+}
+
+
+.options-info li {
+
+    margin: 7px 0;
+}
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.predict-btn {
+
+    width: 100%;
+
+    padding: 16px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #2563eb;
+
+    color: white;
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.predict-btn:hover {
+
+    background: #1d4ed8;
+
+    transform:
+        translateY(-1px);
+}
+
+
+.predict-btn:active {
+
+    transform:
+        translateY(0);
+}
+
+
+/* =========================================================
+   RESULT
+========================================================= */
 
 .result {
-    margin-top: 25px;
-    padding: 15px;
-    background: #dff0d8;
-    color: #2c3e50;
+
+    margin-top: 35px;
+
+    padding: 30px;
+
+    text-align: center;
+
+    border-radius: 16px;
+
+    background: #ecfdf5;
+
+    border:
+        2px solid
+        #86efac;
+}
+
+
+.result p {
+
+    margin: 0;
+
     font-size: 20px;
-    font-weight: bold;
-    border-radius: 5px;
+
+    color: #166534;
+}
+
+
+.result h2 {
+
+    margin:
+        10px
+        0;
+
+    font-size: 42px;
+
+    color: #15803d;
+}
+
+
+.result span {
+
+    color: #64748b;
+}
+
+
+/* =========================================================
+   ERROR BOX
+========================================================= */
+
+.error-box {
+
+    margin:
+        0
+        0
+        30px;
+
+    padding:
+        18px
+        20px;
+
+    background: #fef2f2;
+
+    border:
+        2px solid
+        #fca5a5;
+
+    border-left:
+        6px solid
+        #dc2626;
+
+    border-radius: 12px;
+
+    color: #991b1b;
+
+    font-size: 15px;
+}
+
+
+.error-box strong {
+
+    font-size: 17px;
+
+    color: #b91c1c;
+}
+
+
+.error-box ul {
+
+    margin:
+        10px
+        0
+        0;
+
+    padding-left: 22px;
+}
+
+
+.error-box li {
+
+    margin: 6px 0;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+
+    text-align: center;
+
+    padding: 25px;
+
+    color: #64748b;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .hero h1 {
+
+        font-size: 32px;
+    }
+
+
+    .card {
+
+        padding: 22px;
+    }
+
+
+    .grid {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .result h2 {
+
+        font-size: 32px;
+    }
+
 }
